@@ -1,0 +1,13 @@
+version: '3.0'
+
+services:
+  db:
+    platform: linux/amd64
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./dumps/:/docker-entrypoint-initdb.d
+      - ./mysql-data:/var/lib/mysql
