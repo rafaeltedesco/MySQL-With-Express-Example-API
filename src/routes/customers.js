@@ -1,27 +1,19 @@
 const { Router } = require("express");
-const {
-  OK,
-  NO_CONTENT,
-  CREATED
-} = require("../utils/httpStatus/statusCode");
+const { OK, NO_CONTENT, CREATED } = require("../utils/httpStatus/statusCode");
+const { findAll, findOne } = require("../utils/db/dbUtils");
 
 const router = Router();
 
+const TABLENAME = "customers";
+
 router.get("/", async (_req, res) => {
-  const customers = [
-    { id: 1, name: "Tedesco", email: "tedesco@mail.com", password: 1233 },
-  ];
+  const customers = await findAll(TABLENAME);
   res.status(OK).json(customers);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const customer = {
-    id: 1,
-    name: "Tedesco",
-    email: "tedesco@mail.com",
-    password: 1233,
-  };
+  const customer = await findOne(TABLENAME, Number(id));
 
   res.status(OK).json(customer);
 });
